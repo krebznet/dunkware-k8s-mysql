@@ -1,0 +1,25 @@
+Single MySQL Server Instance Deployment
+           REQUIREMENTS
+1. No Replication or MySQL Clustering
+
+2. Uses a persistent volume claim to a volume
+that is available to the deployed k8 node.
+
+3. Configure a node-port IP address or some other way
+to expose mysql service port outside of kubernetes
+
+4. We need a way to configure the mysql service config file in
+our k8s scripts. Specifically the cache size property.
+5. We would like to use a node selector to specify the target
+k8s node to deploy on.
+
+6. We need a way to specify the CPU and Memory resources that k8
+makes available to it. For example we would want unbounded CPU
+permissions and up to 32GIG of memory.
+
+
+                MILESTONE 
+
+I can then take this script and use it to deploy 5 different
+mysql server instances in my k8 cluster where each instance is
+deployed to a specific node we specify in deployment yaml files.
