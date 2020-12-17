@@ -1,0 +1,11 @@
+# first, label a node with 'mysql01=true'
+kubectl get nodes
+kubectl label nodes docker-desktop mysql01=true
+kubectl get nodes --show-labels
+
+# install the namespace config, pvc, deployment and service of mysql
+kubectl apply -f ns.yaml
+kubectl apply -f config.yaml
+kubectl apply -f pvc.yaml
+kubectl apply -f deployment.yaml
+kubectl apply -f service.yaml

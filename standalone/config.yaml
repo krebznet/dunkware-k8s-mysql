@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql01-config
+  namespace: kube-storage
+data:
+  mysqld.cnf: |-
+    [mysqld]
+    collation_server = utf8_general_ci
+    [client]
+    default_character_set = utf8

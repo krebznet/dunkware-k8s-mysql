@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql01
+  namespace: kube-storage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql01
+  template:
+    metadata:
+      labels:
+        app: mysql01
+    spec:
+      nodeSelector:
+        mysql01: true
+      containers:
+        - name: mysql
+          image: mysql:8.0.12
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: "123456"
+          ports:
+            - containerPort: 3306
+          resources:
+            limits:
+              cpu: "1"
+              memory: "512Mi"
+            requests:
+              cpu: "1"
+              memory: "512Mi"
+          volumeMounts:
+            - name: mysql01-persistent-storage
+              mountPath: "/var/lib/mysql"
+            - name: mysql01-config-volume
+              mountPath: /etc/mysql/mysql.conf.d
+      volumes:
+        - name: mysql01-persistent-storage
+          persistentVolumeClaim:
+            claimName: mysql01-storage
+        - name: mysql01-config-volume
+          configMap:
+            name: mysql01-config
